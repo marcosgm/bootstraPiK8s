@@ -1,10 +1,16 @@
-[hypriot]
-raspb3A
-raspb3B
-raspb3C
-raspb2M
+[hypriot:children]
+master
+nodes
 
 [hypriot:vars]
 ansible_user=pirate
 ansible_password=hypriot
 ansible_become=yes
+
+[master]
+raspb2M
+
+[nodes]
+raspb3A
+raspb3B
+raspb3C

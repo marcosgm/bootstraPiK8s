@@ -1,0 +1,19 @@
+---
+- name: Second playbook, to install k8s on Hypriot
+  gather_facts: no
+  hosts: hypriot
+  vars_files:
+    - secrets.yml
+  tasks:
+  - name: Add the APT GPG keys for k8s repo
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg 
+      state: present
+  - name: Enable the k8s APT repository for Xenial
+    apt_repository:
+      repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+  - name: Install kubernetes (k8s)
+    apt:
+      name: kubeadm
+      state: present
