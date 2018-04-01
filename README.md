@@ -22,11 +22,11 @@ ansible_become=yes
 
 # Setting Environment Variables
 
-Just create a "env.yaml" file, to specify the new password you want for the 'pirate' username (which is sudoer in Hypriot OS)
-pirate_password=PASSWORDHERE
+Just create a "secrets.yaml" file, to specify the new password you want for the 'pirate' username (which is sudoer in Hypriot OS)
+pirate_password: PASSWORDHERE
 
 # Launching the playbook
 execute
-ansible-playbook -i raspinventory firstboot.yml -e env.yaml 
+ansible-playbook -i raspinventory firstboot.yml -e secrets.yaml 
 
 

@@ -2,6 +2,8 @@
 - name: Playbook to bootstrap a Rasberry with HypriotOS
   gather_facts: no
   hosts: hypriot
+  vars_files:
+    - secrets.yml
   tasks:
   - name: Copy SSH key to first-time booted Hypriot OS on Raspberry Pi
     authorized_key:
