@@ -29,7 +29,7 @@ raspb3C
 
 # Setting Environment Variables
 
-In the "secrets.yaml" file we'll specify the new password you want for the 'pirate' username (which is sudoer in Hypriot OS), as well as the ISCSI targets we want to use for /mnt folder later used for Docker storage
+In the "secrets.yml" file we'll specify the new password you want for the 'pirate' username (which is sudoer in Hypriot OS), as well as the ISCSI targets we want to use for /mnt folder later used for Docker storage
 ```
 pirate_password: PASSWORDHERE
 iscsi_portal: 192.168.2.253
