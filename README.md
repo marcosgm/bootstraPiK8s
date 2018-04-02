@@ -29,11 +29,22 @@ raspb3C
 
 # Setting Environment Variables
 
-Just create a "secrets.yaml" file, to specify the new password you want for the 'pirate' username (which is sudoer in Hypriot OS)
+In the "secrets.yaml" file we'll specify the new password you want for the 'pirate' username (which is sudoer in Hypriot OS), as well as the ISCSI targets we want to use for /mnt folder later used for Docker storage
+```
 pirate_password: PASSWORDHERE
+iscsi_portal: 192.168.2.253
+iscsi_target:
+  raspb2M: iqn.2004-04.com.qnap:ts-431p:iscsi.raspb2m.139e05
+  raspb3A: iqn.2004-04.com.qnap:ts-431p:iscsi.raspb3a.139e05
+  raspb3B: iqn.2004-04.com.qnap:ts-431p:iscsi.raspb3b.139e05
+  raspb3C: iqn.2004-04.com.qnap:ts-431p:iscsi.raspb3c.139e05
+```
+
 
 # Launching the playbook
-execute
-ansible-playbook -i raspinventory firstboot.yml -e secrets.yaml 
-
-
+execute in order:
+```
+ansible-playbook -i raspinventory firstboot.yml
+ansible-playbook -i raspinventory setupiscsi.yml 
+ansible-playbook -i raspinventory installk8s.yml 
+```

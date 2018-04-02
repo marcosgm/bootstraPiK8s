@@ -1,0 +1,61 @@
+---
+- name: Playbook to configure iSCSI with my home NAS and mount /mnt there so Docker uses 50G 
+  gather_facts: no
+  hosts: hypriot
+  vars_files:
+    - secrets.yml
+  vars: 
+    dockerfolder: /mnt
+  tasks:
+    - name: Install open-iscsi package
+      apt: 
+        name: "open-iscsi"
+        state: present
+
+    - name: Perform a discovery on '{{ iscsi_portal }}' and show available target nodes
+      open_iscsi:
+        show_nodes: yes
+        discover: yes
+        portal: '{{ iscsi_portal }}'
+
+    - name: Connect to each hosts' corresponding target
+      open_iscsi:
+        login: yes
+        auto_node_startup: yes
+        target: '{{ iscsi_target[inventory_hostname] }}'
+
+    - name: Enable iscsid automatic login at startup 
+      lineinfile: "dest=/etc/iscsi/iscsid.conf regexp=^node.startup line=node.startup=automatic"
+      
+    - name: Wait until /dev/sda is present before continuing
+      wait_for:
+        path: /dev/sda
+        delay: 2
+        timeout: 10
+
+    - name: Create a partition table in the iSCSI volume
+      parted:
+        device: /dev/sda
+        number: 1
+        state: present
+
+    - name: Make EXT4 filesystem
+      filesystem:
+        fstype: ext4
+        dev: /dev/sda1
+        opts: -L dockeriscsi
+
+    - name: Mount the FS at startup via fstab
+      mount:
+        path: "{{ dockerfolder }}"
+        src: /dev/disk/by-label/dockeriscsi
+        fstype: ext4
+        opts: noatime,_netdev
+        state: mounted
+
+    - name: Configure Docker to use "{{ dockerfolder }}"
+      template:
+        src: daemon.json.j2
+        dest: /etc/docker/daemon.json
+
+    - service: name=docker state=restarted
