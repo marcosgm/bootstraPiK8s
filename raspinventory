@@ -8,9 +8,9 @@ ansible_password=hypriot
 ansible_become=yes
 
 [master]
-raspb2M
+raspb2M ansible_host=192.168.2.50
 
 [nodes]
-raspb3A
-raspb3B
-raspb3C
+raspb3A ansible_host=192.168.2.55
+raspb3B ansible_host=192.168.2.76
+raspb3C ansible_host=192.168.2.75
