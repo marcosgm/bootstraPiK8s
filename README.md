@@ -1,4 +1,6 @@
 # References
+
+[![Git](https://app.soluble.cloud/api/v1/public/badges/2e21d28a-92ea-41ec-93d8-ac08b9937505.svg?orgId=568518005652)](https://app.soluble.cloud/repos/details/github.com/marcosgm/bootstrapik8s?orgId=568518005652)  
 Adapted from https://blog.hypriot.com/getting-started-with-docker-and-linux-on-the-raspberry-pi/
 and https://blog.hypriot.com/post/setup-kubernetes-raspberry-pi-cluster/
 
